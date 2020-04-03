@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tradingPlatfrom.dao.CommodityDao">
+    <resultMap id="Sort" type="com.ssm.tradingPlatfrom.entity.CommoditySort">
+        <id property="id"  column="id"/>
+        <result property="sortName" column="sort_name"/>
+        <result property="iconPath" column="icon_path"/>
+        <result property="isDelete" column="is_deleted"/>
+    </resultMap>
+    <select id="findCommoditySort"  resultMap="Sort">
+        SELECT * FROM commodity_sort
+    </select>
+</mapper>

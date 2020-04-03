@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ssm.tradingPlatfrom.dao.UserDao">
+    <resultMap id="UserMessage" type="com.ssm.tradingPlatfrom.entity.User">
+        <id property="id"  column="id"/>
+        <result property="username" column="username"/>
+        <result property="state" column="state"/>
+        <collection property="userMessages" ofType="com.ssm.tradingPlatfrom.entity.UserMessage">
+            <id property="id"  column="testid"/>
+            <result property="sex" column="sex"/>
+            <result property="age" column="age"/>
+            <result property="nickName" column="nick_name"/>
+            <result property="introduce" column="introduce"/>
+            <result property="email" column="email"/>
+            <result property="buyNum" column="buy_num"/>
+            <result property="sellNum" column="sell_num"/>
+            <result property="img" column="img"/>
+            <result property="bornTime" column="born_time"/>
+        </collection>
+    </resultMap>
+
+    <select id="getAllUser"  resultType="com.ssm.tradingPlatfrom.entity.User">
+        SELECT * FROM `user`
+    </select>
+    <select id="loginUser" parameterType="String" resultType="com.ssm.tradingPlatfrom.entity.User">
+        SELECT * FROM user
+          where  username = #{username} and state = 1
+    </select>
+    <select id="loginAdmin" parameterType="String" resultType="com.ssm.tradingPlatfrom.entity.User">
+        SELECT * FROM user
+          where usernam = #{username} and state = 2
+    </select>
+
+    <insert id="insertUser" parameterType="String" keyProperty="userId" useGeneratedKeys="true">
+       insert into user values(null,#{username},#{password},1);
+    </insert>
+
+    <select id="findUserMessage" parameterType="String" resultMap="UserMessage">
+        SELECT
+        `user`.id,
+        `user`.username,
+        `user`.state,
+        usermessage.id,
+        usermessage.email,
+        usermessage.born_time,
+        usermessage.age,
+        usermessage.sex,
+        usermessage.img,
+        usermessage.buy_num,
+        usermessage.sell_num,
+        usermessage.introduce,
+        usermessage.nick_name
+        FROM
+        `user`
+        INNER JOIN usermessage ON `user`.id = usermessage.uid
+        WHERE
+        `user`.username = #{username} and
+        `user`.state = 1
+
+    </select>
+    <select id="findALLUserMessage"   resultMap="UserMessage">
+        SELECT
+        `user`.id,
+        `user`.username,
+        `user`.state,
+        usermessage.id,
+        usermessage.email,
+        usermessage.born_time,
+        usermessage.age,
+        usermessage.sex,
+        usermessage.img,
+        usermessage.buy_num,
+        usermessage.sell_num,
+        usermessage.introduce,
+        usermessage.nick_name
+        FROM
+        `user`
+        INNER JOIN usermessage ON `user`.id = usermessage.uid
+        WHERE
+        `user`.state = 1
+
+    </select>
+
+    <insert id="insertUserMessage" parameterType="com.ssm.tradingPlatfrom.entity.UserMessage" >
+       insert into usermessage values(null,#{id},#{email},null,#{sex},#{img},#{buyNum},#{sellNum},#{introduce},#{nickName},null);
+    </insert>
+
+
+</mapper>
