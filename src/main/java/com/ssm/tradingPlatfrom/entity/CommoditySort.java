@@ -5,7 +5,8 @@ public class CommoditySort {
     private int id;
     private String sortName;
     private String iconPath;
-    private String isDelete;
+    private String parentSort;
+    private String isShow;
 
     public int getId() {
         return id;
@@ -31,12 +32,20 @@ public class CommoditySort {
         this.iconPath = iconPath;
     }
 
-    public String getIsDelete() {
-        return isDelete;
+    public String getParentSort() {
+        return parentSort;
     }
 
-    public void setIsDelete(String isDelete) {
-        this.isDelete = isDelete;
+    public void setParentSort(String parentSort) {
+        this.parentSort = parentSort;
+    }
+
+    public String getIsShow() {
+        return isShow;
+    }
+
+    public void setIsShow(String isShow) {
+        this.isShow = isShow;
     }
 
     @Override
@@ -45,7 +54,8 @@ public class CommoditySort {
                 "id=" + id +
                 ", sortName='" + sortName + '\'' +
                 ", iconPath='" + iconPath + '\'' +
-                ", isDelete='" + isDelete + '\'' +
+                ", parentSort='" + parentSort + '\'' +
+                ", isShow='" + isShow + '\'' +
                 '}';
     }
 }

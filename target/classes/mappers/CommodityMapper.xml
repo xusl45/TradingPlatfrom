@@ -6,9 +6,32 @@
         <id property="id"  column="id"/>
         <result property="sortName" column="sort_name"/>
         <result property="iconPath" column="icon_path"/>
-        <result property="isDelete" column="is_deleted"/>
+        <result property="parentSort" column="parent_sort"/>
+        <result property="isShow" column="is_show"/>
+    </resultMap>
+    <resultMap id="Commodity" type="com.ssm.tradingPlatfrom.entity.Commodity">
+        <id property="id"  column="id"/>
+        <result property="sortID" column="sort_id"/>
+        <result property="mainImage" column="main_image"/>
+        <result property="name" column="name"/>
+        <result property="subImages" column="sub_images"/>
+        <result property="detail" column="detail"/>
+        <result property="minPrice" column="min_price"/>
+        <result property="type" column="type"/>
+        <result property="sendPrice" column="send_price"/>
+        <result property="sellNum" column="sell_num"/>
     </resultMap>
     <select id="findCommoditySort"  resultMap="Sort">
-        SELECT * FROM commodity_sort
+        SELECT * FROM commodity_sort  WHERE commodity_sort.is_show = 0
     </select>
+    <select id="findALLCommodity"  resultMap="Commodity">
+        SELECT * FROM commodity
+    </select>
+    <select id="findOneCommodity"  resultMap="Commodity">
+        SELECT * from commodity WHERE commodity.`name` LIKE CONCAT(CONCAT('%',#{name},'%')) AND commodity.is_delete = 'N'
+    </select>
+    <select id="findCommodityOfSort"  resultMap="Commodity">
+        SELECT * FROM commodity WHERE commodity.sort_id = #{id} AND commodity.is_delete = 'N'
+    </select>
+
 </mapper>

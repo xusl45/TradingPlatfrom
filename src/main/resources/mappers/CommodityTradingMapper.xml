@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tradingPlatfrom.dao.CommodityTradingDao">
+    <resultMap id="CommodityStorage" type="com.ssm.tradingPlatfrom.entity.CommodityStorage">
+        <id property="id"  column="id"/>
+        <result property="uid" column="uid"/>
+        <result property="size" column="size"/>
+        <result property="price" column="price"/>
+        <result property="sellTime" column="sell_time"/>
+        <result property="commodityID" column="commodity_id"/>
+        <result property="orderNumber" column="order_number"/>
+        <collection property="commodity" ofType="com.ssm.tradingPlatfrom.entity.Commodity">
+            <result property="sortID" column="sort_id"/>
+            <result property="mainImage" column="main_image"/>
+            <result property="name" column="name"/>
+        </collection>
+    </resultMap>
+    <insert id="insertCommoditySize" parameterType="com.ssm.tradingPlatfrom.entity.CommodityStorage" >
+       INSERT INTO commodity_storage VALUES(null,#{uid},#{size},#{price},null,#{commodityID},#{orderNumber});
+    </insert>
+    <select id="showALLCommoditySize"  resultMap="CommodityStorage">
+    SELECT
+commodity.sort_id,
+commodity.main_image,
+commodity.`name`,
+commodity_storage.id,
+commodity_storage.uid,
+commodity_storage.size,
+commodity_storage.price,
+commodity_storage.sell_time,
+commodity_storage.commodity_id,
+commodity_storage.order_number
+FROM
+commodity
+INNER JOIN commodity_storage ON commodity_storage.commodity_id = commodity.id
+WHERE
+commodity_storage.uid = #{uid}
+    </select>
+
+</mapper>
