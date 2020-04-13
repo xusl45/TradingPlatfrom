@@ -58,7 +58,7 @@ public class UserServiceImp implements UserService {
             //设置个人信息
             User users = userDao.loginUser(userName);
             String nickName = "第"+users.getId()+"位用户";
-            UserMessage userMessage = new UserMessage(users.getId(),null,nickName,"男","这个人很懒，啥也没留下","0","0",null,null,null);
+            UserMessage userMessage = new UserMessage(users.getId(),null,nickName,"男","这个人很懒，啥也没留下","0","0",null,null);
             userMessageService.insertUserMessage(userMessage);
 
             return true;

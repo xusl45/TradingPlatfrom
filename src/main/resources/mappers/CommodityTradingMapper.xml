@@ -37,5 +37,8 @@ INNER JOIN commodity_storage ON commodity_storage.commodity_id = commodity.id
 WHERE
 commodity_storage.uid = #{uid}
     </select>
-
+    <delete id="deleteCommoditySize" parameterType="int">
+        delete from commodity_storage
+        where id=#{id}
+    </delete>
 </mapper>

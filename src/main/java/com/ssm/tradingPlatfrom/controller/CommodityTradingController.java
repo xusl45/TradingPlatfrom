@@ -35,7 +35,6 @@ public class CommodityTradingController {
     @RequestMapping("/showALLCommoditySize")//展示自己所有挂售商品
     @ResponseBody
     private ServerResponse showALLCommoditySize(String uid) {
-        System.out.println(uid+"许舒隆大帅哥");
         List<CommodityStorage> commodityStorages = commodityTradingService.showALLCommoditySize(Integer.parseInt(uid));
         if (commodityStorages!= null) {
             return  ServerResponse.createBySuccess("添加预售商品成功",commodityStorages);
@@ -44,6 +43,20 @@ public class CommodityTradingController {
         }
 
     }
+
+    @RequestMapping("/deleteCommoditySize")//取消挂售
+    @ResponseBody
+    private ServerResponse deleteCommoditySize(String id) {
+        Boolean deleteCommoditySize = commodityTradingService.deleteCommoditySize(Integer.parseInt(id));
+        if (deleteCommoditySize!= null) {
+            return  ServerResponse.createBySuccess("取消预售商品成功",deleteCommoditySize);
+        }else {
+            return  ServerResponse.createByError("取消预售商品失败");
+        }
+
+    }
+
+
 
 
 }

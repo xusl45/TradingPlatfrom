@@ -31,4 +31,10 @@ public class CommodityTradingServicelmpl implements CommodityTradingService {
         List<CommodityStorage> commodityStorages = commodityTradingDao.showALLCommoditySize(uid);
         return commodityStorages;
     }
+
+    @Override
+    public Boolean deleteCommoditySize(int id) {
+        commodityTradingDao.deleteCommoditySize(id);
+        return true;
+    }
 }

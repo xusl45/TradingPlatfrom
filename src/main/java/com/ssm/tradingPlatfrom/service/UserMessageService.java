@@ -12,7 +12,7 @@ public interface UserMessageService {
     User findUserMessage(String userName);
     //查找所有用户全部信息
     List<User> findALLUserMessage();
-
+    //设置个人信息
     boolean setUserMessage(UserMessage userMessage);
     boolean setimg(int id, String adress);
     //插入个人信息

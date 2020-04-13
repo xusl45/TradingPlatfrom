@@ -9,6 +9,12 @@
         <result property="parentSort" column="parent_sort"/>
         <result property="isShow" column="is_show"/>
     </resultMap>
+    <resultMap id="Banner" type="com.ssm.tradingPlatfrom.entity.CommodityBanner">
+        <id property="id"  column="id"/>
+        <result property="Name" column="name"/>
+        <result property="imgPath" column="img_path"/>
+        <result property="isShow" column="is_show"/>
+    </resultMap>
     <resultMap id="Commodity" type="com.ssm.tradingPlatfrom.entity.Commodity">
         <id property="id"  column="id"/>
         <result property="sortID" column="sort_id"/>
@@ -24,6 +30,9 @@
     <select id="findCommoditySort"  resultMap="Sort">
         SELECT * FROM commodity_sort  WHERE commodity_sort.is_show = 0
     </select>
+    <select id="findCommodityBanner"  resultMap="Banner">
+        SELECT * FROM commodity_banner WHERE commodity_banner.is_show = '0'
+    </select>
     <select id="findALLCommodity"  resultMap="Commodity">
         SELECT * FROM commodity
     </select>
@@ -33,5 +42,6 @@
     <select id="findCommodityOfSort"  resultMap="Commodity">
         SELECT * FROM commodity WHERE commodity.sort_id = #{id} AND commodity.is_delete = 'N'
     </select>
+
 
 </mapper>

@@ -2,6 +2,7 @@ package com.ssm.tradingPlatfrom.service.impl;
 
 import com.ssm.tradingPlatfrom.dao.CommodityDao;
 import com.ssm.tradingPlatfrom.entity.Commodity;
+import com.ssm.tradingPlatfrom.entity.CommodityBanner;
 import com.ssm.tradingPlatfrom.entity.CommoditySort;
 import com.ssm.tradingPlatfrom.service.CommodityService;
 import org.springframework.stereotype.Service;
@@ -43,5 +44,15 @@ public class CommodityServicelmpl implements CommodityService {
     public List<Commodity> findCommodityOfSort(int  id) {
         List<Commodity> commoditys = commodityDao.findCommodityOfSort(id);
         return commoditys;
+    }
+
+    @Override
+    public List<CommodityBanner> findCommodityBanner() {
+        List<CommodityBanner> commodityBanners = commodityDao.findCommodityBanner();
+        for (CommodityBanner commodityBanner:commodityBanners)
+        {
+            commodityBanner.setIsShow(null);
+        }
+        return commodityBanners;
     }
 }

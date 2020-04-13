@@ -23,7 +23,17 @@ public class UserMessage {
     {
     }
 
-    public UserMessage(int id, String email, String nickName, String sex, String introduce, String sellNum, String buyNum, String img, String age, Date bornTime) {
+    public UserMessage(int id, String email, String nickName, String sex, String introduce, String img, String age) {
+        this.id = id;
+        this.email = email;
+        this.nickName = nickName;
+        this.sex = sex;
+        this.introduce = introduce;
+        this.img = img;
+        this.age = age;
+    }
+
+    public UserMessage(int id, String email, String nickName, String sex, String introduce, String sellNum, String buyNum, String img, String age) {
         this.id = id;
         this.email = email;
         this.nickName = nickName;
@@ -33,7 +43,6 @@ public class UserMessage {
         this.buyNum = buyNum;
         this.img = img;
         this.age = age;
-        this.bornTime = bornTime;
     }
 
     @Override

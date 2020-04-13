@@ -1,6 +1,7 @@
 package com.ssm.tradingPlatfrom.controller;
 
 import com.ssm.tradingPlatfrom.entity.Commodity;
+import com.ssm.tradingPlatfrom.entity.CommodityBanner;
 import com.ssm.tradingPlatfrom.entity.CommoditySort;
 import com.ssm.tradingPlatfrom.entity.User;
 import com.ssm.tradingPlatfrom.service.CommodityService;
@@ -19,6 +20,18 @@ public class CommodityController {
 
     @Autowired
     private CommodityService commodityService;
+
+    @RequestMapping("/findCommodityBanner")//得到分类列表
+    @ResponseBody
+    private ServerResponse findCommodityBanner() {
+        List<CommodityBanner> commodityBanners = commodityService.findCommodityBanner();
+        if (commodityBanners!= null) {
+            return  ServerResponse.createBySuccess("Banner广告位获取成功",commodityBanners);
+        }else {
+            return  ServerResponse.createByError("Banner广告位获取成功");
+        }
+
+    }
 
     @RequestMapping("/findCommoditySort")//得到分类列表
     @ResponseBody

@@ -1,6 +1,7 @@
 package com.ssm.tradingPlatfrom.controller;
 
 import com.ssm.tradingPlatfrom.entity.User;
+import com.ssm.tradingPlatfrom.entity.UserMessage;
 import com.ssm.tradingPlatfrom.service.UserMessageService;
 import com.ssm.tradingPlatfrom.service.UserService;
 import com.ssm.tradingPlatfrom.utils.ServerResponse;
@@ -25,7 +26,6 @@ public class UserMessageController {
     @ResponseBody
     private ServerResponse findUserMessage(String userName) {
         User user = userMessageService.findUserMessage(userName);
-        System.out.println(user.getUserMessages().toString());
         if (user!= null) {
             return  ServerResponse.createBySuccess("用户全部个人信息",user);
         }else {
@@ -48,16 +48,19 @@ public class UserMessageController {
         }
 
     }
-//
-//    @RequestMapping("/setUserMessage")//增加个人信息
-//    @ResponseBody
-//    private Map<String, Object> setUserMessage(String phone,String sex,String nickName,String dwell,String introduce,String answer,String article, String  email,String profession,String img) {
-//            int id = userService.findId(phone);
-//        UserMessage userMessage = new UserMessage(id,sex,nickName,dwell,introduce,email,answer,article,profession,img);
-//        boolean user = userMessageService.setUserMessage(userMessage);
-//        Map<String, Object> map = ReturnMap.ReturnMapS(user);
-//        return map;
-//
-//    }
+
+
+    @RequestMapping("/setUserMessage")//修改用户个人信息
+    @ResponseBody
+    private ServerResponse setUserMessage(String uid,String email,String sex,String img,String introduce ,String nickName,String age) {
+        UserMessage userMessage = new UserMessage(Integer.parseInt(uid),email,nickName,sex,img,introduce,age);
+        boolean user = userMessageService.setUserMessage(userMessage);
+        if (user) {
+            return  ServerResponse.createBySuccess("用户全部个人信息",user);
+        }else {
+            return  ServerResponse.createByError("获取用户全部个人信息失败");
+        }
+
+    }
 
 }

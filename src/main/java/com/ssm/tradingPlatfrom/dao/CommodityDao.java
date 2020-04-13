@@ -1,6 +1,7 @@
 package com.ssm.tradingPlatfrom.dao;
 
 import com.ssm.tradingPlatfrom.entity.Commodity;
+import com.ssm.tradingPlatfrom.entity.CommodityBanner;
 import com.ssm.tradingPlatfrom.entity.CommoditySort;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +16,6 @@ public interface CommodityDao {
     List<Commodity> findOneCommodity(String name);//模糊查询商品信息
 
     List<Commodity> findCommodityOfSort(int id);//查找某个系列商品的id
+
+    List<CommodityBanner> findCommodityBanner(); //查找商品广告banner
 }
