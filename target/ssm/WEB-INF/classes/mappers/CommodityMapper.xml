@@ -30,6 +30,9 @@
     <select id="findCommoditySort"  resultMap="Sort">
         SELECT * FROM commodity_sort  WHERE commodity_sort.is_show = 0
     </select>
+    <select id="findCommodity"  resultMap="Commodity">
+      SELECT * FROM commodity WHERE commodity.id = #{id} AND commodity.is_delete = 'N'
+    </select>
     <select id="findCommodityBanner"  resultMap="Banner">
         SELECT * FROM commodity_banner WHERE commodity_banner.is_show = '0'
     </select>
@@ -42,6 +45,10 @@
     <select id="findCommodityOfSort"  resultMap="Commodity">
         SELECT * FROM commodity WHERE commodity.sort_id = #{id} AND commodity.is_delete = 'N'
     </select>
+    <update id="updateCommodityPrice"  parameterType="com.ssm.tradingPlatfrom.entity.CommodityStorage">
+        update commodity set min_price=#{price} where id=#{commodityID}
+    </update>
+
 
 
 </mapper>

@@ -41,4 +41,23 @@ commodity_storage.uid = #{uid}
         delete from commodity_storage
         where id=#{id}
     </delete>
+    <select id="findCommmoditySize"  resultMap="CommodityStorage">
+        SELECT * FROM commodity_storage WHERE commodity_storage.id = #{id}
+    </select>
+    <select id="findMinpriceCommodityStore"  resultMap="CommodityStorage">
+        SELECT
+commodity_storage.id,
+commodity_storage.uid,
+commodity_storage.size,
+MIN(commodity_storage.price) as price ,
+commodity_storage.sell_time,
+commodity_storage.commodity_id,
+commodity_storage.order_number
+FROM
+commodity_storage
+WHERE
+commodity_storage.commodity_id = #{commodityID}
+ORDER BY
+commodity_storage.price ASC
+    </select>
 </mapper>

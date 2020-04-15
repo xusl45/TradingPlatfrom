@@ -1,6 +1,7 @@
 package com.ssm.tradingPlatfrom.service.impl;
 
 
+import com.ssm.tradingPlatfrom.dao.CommodityDao;
 import com.ssm.tradingPlatfrom.dao.CommodityTradingDao;
 import com.ssm.tradingPlatfrom.entity.Commodity;
 import com.ssm.tradingPlatfrom.entity.CommodityStorage;
@@ -16,6 +17,8 @@ public class CommodityTradingServicelmpl implements CommodityTradingService {
 
     @Autowired
     private CommodityTradingDao commodityTradingDao;
+    @Autowired
+    private CommodityDao commodityDao;
 
     @Override
     public Boolean insertCommoditySize(CommodityStorage commodityStorage) {
@@ -23,6 +26,12 @@ public class CommodityTradingServicelmpl implements CommodityTradingService {
         commodityStorage.setOrderNumber(OrderCodeFactory.getOrderCode((long)commodityStorage.getUid()));
         System.out.println(commodityStorage.getOrderNumber());
         commodityTradingDao.insertCommoditySize(commodityStorage);
+        Commodity commodity = commodityDao.findCommodity(commodityStorage.getCommodityID());
+        System.out.println(commodity.toString()+"xushulong");
+        if ((commodity.getMinPrice()>=commodityStorage.getPrice())||(commodity.getMinPrice()==0))
+        {
+            commodityDao.updateCommodityPrice(commodityStorage);
+        }
         return true;
     }
 
@@ -34,7 +43,21 @@ public class CommodityTradingServicelmpl implements CommodityTradingService {
 
     @Override
     public Boolean deleteCommoditySize(int id) {
+        CommodityStorage commodityStorage = commodityTradingDao.findCommmoditySize(id);
+        System.out.println(commodityStorage.toString()+"xushulong");
         commodityTradingDao.deleteCommoditySize(id);
+        CommodityStorage  commodityStorages=commodityTradingDao.findMinpriceCommodityStore(commodityStorage.getCommodityID());
+        System.out.println(commodityStorages.toString()+"xushulong123456");
+        if (commodityStorages == null)
+        {
+            CommodityStorage commodityStorage1 = new CommodityStorage();
+            commodityStorage1.setCommodityID(id);
+            commodityStorage.setPrice(0);
+            commodityDao.updateCommodityPrice(commodityStorage1);
+        }
+        else{
+            commodityDao.updateCommodityPrice(commodityStorages);
+        }
         return true;
     }
 }
