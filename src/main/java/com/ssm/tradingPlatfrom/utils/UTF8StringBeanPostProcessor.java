@@ -1,14 +1,14 @@
 package com.ssm.tradingPlatfrom.utils;
 
-import java.nio.charset.Charset;  
-import java.util.ArrayList;  
-import java.util.List;  
-  
-import org.springframework.beans.BeansException;  
-import org.springframework.beans.factory.config.BeanPostProcessor;  
-import org.springframework.http.MediaType;  
-import org.springframework.http.converter.StringHttpMessageConverter;  
-  
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.StringHttpMessageConverter;
+
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
+
 /**  
  * 解决spring MVC3 中@ResponseBody的中文乱码问?
  */    

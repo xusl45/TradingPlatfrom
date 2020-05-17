@@ -3,7 +3,6 @@ package com.ssm.tradingPlatfrom.service.impl;
 import com.ssm.tradingPlatfrom.dao.UserDao;
 import com.ssm.tradingPlatfrom.entity.User;
 import com.ssm.tradingPlatfrom.entity.UserMessage;
-
 import com.ssm.tradingPlatfrom.service.UserMessageService;
 import com.ssm.tradingPlatfrom.service.UserService;
 import com.ssm.tradingPlatfrom.utils.Md5;
@@ -27,7 +26,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public User  login(String username, String password) {
+    public User login(String username, String password) {
         User loginUser = userDao.loginUser(username);
 //        System.out.println(loginuser.toString());
         if (loginUser == null) {
@@ -58,10 +57,28 @@ public class UserServiceImp implements UserService {
             //设置个人信息
             User users = userDao.loginUser(userName);
             String nickName = "第"+users.getId()+"位用户";
-            UserMessage userMessage = new UserMessage(users.getId(),null,nickName,"男","这个人很懒，啥也没留下","0","0",null,null);
+            UserMessage userMessage = new UserMessage(users.getId(),null,nickName,"男","这个人很懒，啥也没留下",0,null,null);
+            System.out.println(userMessage);
             userMessageService.insertUserMessage(userMessage);
 
             return true;
+        }
+    }
+
+    @Override
+    public User adminLogin(String userName, String password) {
+        User loginUser = userDao.adminLogin(userName);
+//        System.out.println(loginuser.toString());
+        if (loginUser == null) {
+            return null;
+        } else {
+            if (Md5.JM(loginUser.getPassword()).equals(password)) {
+                loginUser.setPassword("");
+
+                return loginUser;
+            } else {
+                return null;
+            }
         }
     }
 }

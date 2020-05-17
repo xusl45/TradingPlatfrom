@@ -23,4 +23,8 @@ public interface CommodityDao {
     Commodity findCommodity(int id);//根据id查询某个单独的商品
 
     void updateCommodityPrice(CommodityStorage commodityStorage);//更新最低售价
+
+    CommoditySort findCommoditySortById(int id); //根据商品的id查询对应的类别
+
+    void updateSellNum(Commodity commodity); //增加售出商品
 }

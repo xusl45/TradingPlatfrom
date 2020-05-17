@@ -3,6 +3,7 @@ package com.ssm.tradingPlatfrom.service.impl;
 
 import com.ssm.tradingPlatfrom.dao.UserDao;
 import com.ssm.tradingPlatfrom.entity.User;
+import com.ssm.tradingPlatfrom.entity.UserAddress;
 import com.ssm.tradingPlatfrom.entity.UserMessage;
 import com.ssm.tradingPlatfrom.service.UserMessageService;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,12 @@ public class UserMessageServiceImpl implements UserMessageService {
     }
 
     @Override
+    public User findAdminMessage(String userName) {
+        User user = userDao.findAdminMessage(userName);
+        return user;
+    }
+
+    @Override
     public List<User> findALLUserMessage() {
         List<User> users = userDao.findALLUserMessage();
         return users;
@@ -30,17 +37,8 @@ public class UserMessageServiceImpl implements UserMessageService {
 
     @Override
     public boolean setUserMessage(UserMessage userMessage) {
-//        User user = userDao.findUserMessage(userMessage.getId());
-//        if (user==null)
-//        {
-//            userDao.insertUserMessage(userMessage);
-//        }else {
-//
-//            userDao.updataUserMessage(userMessage);
-//        }
-//
-//        return true;
-        return  false;
+       userDao.setUserMessage(userMessage);
+        return true;
     }
 
 
@@ -63,5 +61,36 @@ public class UserMessageServiceImpl implements UserMessageService {
     @Override
     public void insertUserMessage(UserMessage userMessage) {
         userDao.insertUserMessage(userMessage);
+    }
+
+    @Override
+    public List<UserAddress> findALLUserAddress(int uid) {
+        List<UserAddress> userAddresses = userDao.findALLUserAddress(uid);
+        return userAddresses;
+    }
+
+    @Override
+    public Boolean insertUserAddress(UserAddress userAddress) {
+        userDao.insertUserAddress(userAddress);
+        return true;
+    }
+
+    @Override
+    public Boolean deleteUserAddress(int id) {
+        userDao.deleteUserAddress(id);
+        return true;
+    }
+
+    @Override
+    public Boolean updateUserAddress(UserAddress userAddress) {
+        userDao. updateUserAddress(userAddress);
+        return true;
+    }
+
+    @Override
+    public UserAddress findUserAddressByID(int id) {
+
+        UserAddress userAddress = userDao.findUserAddressByID(id);
+        return userAddress;
     }
 }

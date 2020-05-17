@@ -69,7 +69,7 @@ public class ServerResponse<T> {
     //使之不在序列化结果中
     @JsonIgnore
     public boolean checkIsSuccess(){
-        return this.statu==ResponseCode.SUCCESS.getCode();
+        return this.statu== ResponseCode.SUCCESS.getCode();
     }
 //泛型方法
 
@@ -80,7 +80,7 @@ public class ServerResponse<T> {
      * @param <T>
      * @return
      */
-    public static <T> ServerResponse<T> createBySuccess(String msg,T data){
+    public static <T> ServerResponse<T> createBySuccess(String msg, T data){
         return new ServerResponse<T>(ResponseCode.SUCCESS.getCode(),data,msg);
     }
 

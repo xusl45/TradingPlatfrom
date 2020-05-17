@@ -48,7 +48,12 @@
     <update id="updateCommodityPrice"  parameterType="com.ssm.tradingPlatfrom.entity.CommodityStorage">
         update commodity set min_price=#{price} where id=#{commodityID}
     </update>
-
+    <update id="updateSellNum"  parameterType="com.ssm.tradingPlatfrom.entity.Commodity">
+        update commodity set sell_num=#{sellNum} where id=#{id}
+    </update>
+    <select id="findCommoditySortById"  resultMap="Sort">
+        SELECT * FROM commodity_sort INNER JOIN commodity ON commodity.sort_id = commodity_sort.id WHERE commodity.id = #{id}
+    </select>
 
 
 </mapper>

@@ -1,6 +1,5 @@
 package com.ssm.tradingPlatfrom.controller;
 
-import com.ssm.tradingPlatfrom.entity.CommoditySort;
 import com.ssm.tradingPlatfrom.entity.CommodityStorage;
 import com.ssm.tradingPlatfrom.service.CommodityTradingService;
 import com.ssm.tradingPlatfrom.utils.ServerResponse;
@@ -21,7 +20,7 @@ public class CommodityTradingController {
 
     @RequestMapping("/insertCommoditySize")//增加挂售商品尺码 价格 用户id
     @ResponseBody
-    private ServerResponse insertCommoditySize(String uid,String price,String size ,String commodityID) {
+    private ServerResponse insertCommoditySize(String uid, String price, String size , String commodityID) {
         CommodityStorage commodityStorage = new CommodityStorage(Integer.parseInt(uid),Integer.parseInt(price),Integer.parseInt(size),Integer.parseInt(commodityID));
         Boolean insertCommoditySize = commodityTradingService.insertCommoditySize(commodityStorage);
         if (insertCommoditySize!= null) {
@@ -56,6 +55,29 @@ public class CommodityTradingController {
 
     }
 
+    @RequestMapping("/showALLCommoditySizeById")//显示某个id商品的挂售信息
+    @ResponseBody
+    private ServerResponse showALLCommoditySizeById(String commodityId) {
+        List<CommodityStorage> commodityStorages = commodityTradingService.showALLCommoditySizeById(Integer.parseInt(commodityId));
+        if (commodityStorages!= null) {
+            return  ServerResponse.createBySuccess("添加预售商品成功",commodityStorages);
+        }else {
+            return  ServerResponse.createByError("添加预售商品失败");
+        }
+
+    }
+
+    @RequestMapping("/findALLCommoditySize")//展示所有挂售信息
+    @ResponseBody
+    private ServerResponse findALLCommoditySize() {
+        List<CommodityStorage> commodityStorages = commodityTradingService.findALLCommoditySize();
+        if (commodityStorages!= null) {
+            return  ServerResponse.createBySuccess("展示所有预售商品成功",commodityStorages);
+        }else {
+            return  ServerResponse.createByError("展示预售商品失败");
+        }
+
+    }
 
 
 

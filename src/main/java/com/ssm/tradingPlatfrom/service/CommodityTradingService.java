@@ -10,4 +10,8 @@ public interface CommodityTradingService {
     List<CommodityStorage> showALLCommoditySize(int uid);
 
     Boolean deleteCommoditySize(int id);
+
+    List<CommodityStorage> showALLCommoditySizeById(int commodityId);
+
+    List<CommodityStorage> findALLCommoditySize();
 }

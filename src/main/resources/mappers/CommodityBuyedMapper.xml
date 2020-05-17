@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tradingPlatfrom.dao.CommodityBuyedDao">
+    <resultMap id="CommodityStorage" type="com.ssm.tradingPlatfrom.entity.CommodityRecord">
+        <id property="id"  column="id"/>
+        <result property="uid" column="uid"/>
+        <result property="bid" column="bid"/>
+        <result property="price" column="price"/>
+        <result property="buyTime" column="buy_time"/>
+        <result property="orderNumber" column="order_num"/>
+        <result property="commodityID" column="commodity_id"/>
+        <result property="storageID" column="storage_id"/>
+        <result property="size" column="size"/>
+        <result property="tradingPrice" column="trading_price"/>
+        <result property="addressID" column="address_id"/>
+        <result property="state" column="state"/>
+        <result property="pay" column="pay"/>
+        <result property="courierNumber" column="courier_number"/>
+        <result property="isDelete" column="is_delete"/>
+        <collection property="commodity" ofType="com.ssm.tradingPlatfrom.entity.Commodity">
+            <result property="sortID" column="sort_id"/>
+            <result property="mainImage" column="main_image"/>
+            <result property="name" column="test_name"/>
+        </collection>
+        <collection property="address" ofType="com.ssm.tradingPlatfrom.entity.UserAddress">
+            <result property="name" column="name"/>
+            <result property="phone" column="phone" />
+            <result property="zipCode" column="zip_code"/>
+            <result property="address" column="address"/>
+        </collection>
+    </resultMap>
+    <insert id="insertCommodityOrder" parameterType="com.ssm.tradingPlatfrom.entity.CommodityRecord" >
+       insert into commodity_record values(NULL,#{uid},#{bid},#{price},null,#{orderNumber},#{storageID},#{commodityID},#{size},#{tradingPrice},#{addressID},0,#{pay},null,'N')
+    </insert>
+    <select id="findCommodityOrderBidByID"  resultMap="CommodityStorage">
+        SELECT
+commodity_record.id,
+commodity_record.uid,
+commodity_record.bid,
+commodity_record.price,
+commodity_record.buy_time,
+commodity_record.order_num,
+commodity_record.storage_id,
+commodity_record.commodity_id,
+commodity_record.size,
+commodity_record.trading_price,
+commodity_record.address_id,
+commodity_record.state,
+commodity_record.pay,
+commodity_record.courier_number,
+commodity_record.is_delete,
+user_address.`name`,
+user_address.phone,
+user_address.zip_code,
+user_address.address,
+commodity.main_image,
+commodity.sort_id,
+commodity.`name` as test_name
+FROM
+commodity
+INNER JOIN commodity_record ON commodity_record.commodity_id = commodity.id
+INNER JOIN user_address ON commodity_record.address_id = user_address.id
+WHERE
+commodity_record.bid = #{bid}
+
+    </select>
+    <select id="findALLCommodityOrder"  resultMap="CommodityStorage">
+        SELECT
+commodity_record.id,
+commodity_record.uid,
+commodity_record.bid,
+commodity_record.price,
+commodity_record.buy_time,
+commodity_record.order_num,
+commodity_record.storage_id,
+commodity_record.commodity_id,
+commodity_record.size,
+commodity_record.trading_price,
+commodity_record.address_id,
+commodity_record.state,
+commodity_record.pay,
+commodity_record.courier_number,
+commodity_record.is_delete,
+user_address.`name`,
+user_address.phone,
+user_address.zip_code,
+user_address.address,
+commodity.main_image,
+commodity.sort_id,
+commodity.`name` as test_name
+FROM
+commodity
+INNER JOIN commodity_record ON commodity_record.commodity_id = commodity.id
+INNER JOIN user_address ON commodity_record.address_id = user_address.id
+
+    </select>
+    <select id="findCommodityOrderByID"  resultMap="CommodityStorage">
+        SELECT
+commodity_record.id,
+commodity_record.uid,
+commodity_record.bid,
+commodity_record.price,
+commodity_record.buy_time,
+commodity_record.order_num,
+commodity_record.storage_id,
+commodity_record.commodity_id,
+commodity_record.size,
+commodity_record.trading_price,
+commodity_record.address_id,
+commodity_record.state,
+commodity_record.pay,
+commodity_record.courier_number,
+commodity_record.is_delete,
+user_address.`name`,
+user_address.phone,
+user_address.zip_code,
+user_address.address,
+commodity.main_image,
+commodity.sort_id,
+commodity.`name` as test_name
+FROM
+commodity
+INNER JOIN commodity_record ON commodity_record.commodity_id = commodity.id
+INNER JOIN user_address ON commodity_record.address_id = user_address.id
+WHERE
+commodity_record.id = #{id}
+
+    </select>
+    <select id="findCommodityOrderUidByID"  resultMap="CommodityStorage">
+        SELECT
+commodity_record.id,
+commodity_record.uid,
+commodity_record.bid,
+commodity_record.price,
+commodity_record.buy_time,
+commodity_record.order_num,
+commodity_record.storage_id,
+commodity_record.commodity_id,
+commodity_record.size,
+commodity_record.trading_price,
+commodity_record.address_id,
+commodity_record.state,
+commodity_record.pay,
+commodity_record.courier_number,
+commodity_record.is_delete,
+user_address.`name`,
+user_address.phone,
+user_address.zip_code,
+user_address.address,
+commodity.main_image,
+commodity.sort_id,
+commodity.`name` as test_name
+FROM
+commodity
+INNER JOIN commodity_record ON commodity_record.commodity_id = commodity.id
+INNER JOIN user_address ON commodity_record.address_id = user_address.id
+WHERE
+commodity_record.uid = #{uid}
+
+    </select>
+    <update id="sendCommodityAfter" parameterType="com.ssm.tradingPlatfrom.entity.CommodityRecord">
+update  commodity_record set courier_number = #{courierNumber},
+state = #{state}
+where id=#{id}
+    </update>
+    <update id="sendCommodityReceiving" parameterType="com.ssm.tradingPlatfrom.entity.CommodityRecord">
+update  commodity_record set
+state = 2
+where id=#{id}
+    </update>
+</mapper>

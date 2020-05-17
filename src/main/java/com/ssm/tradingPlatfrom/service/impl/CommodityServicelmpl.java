@@ -16,6 +16,7 @@ public class CommodityServicelmpl implements CommodityService {
 
     @Resource
     private CommodityDao commodityDao;
+
     @Override
     public List<CommoditySort> findCommoditySort() {
         List<CommoditySort> commoditySorts = commodityDao.findCommoditySort();
@@ -54,5 +55,20 @@ public class CommodityServicelmpl implements CommodityService {
             commodityBanner.setIsShow(null);
         }
         return commodityBanners;
+    }
+
+    @Override
+    public Commodity findOneCommodityById(int id) {
+        Commodity commodity = commodityDao.findCommodity(id);
+        return commodity;
+    }
+
+    @Override
+    public CommoditySort findCommoditySortById(int id) {
+        CommoditySort commoditySort = commodityDao.findCommoditySortById(id);
+        commoditySort.setIconPath(null);
+        commoditySort.setParentSort(null);
+        commoditySort.setIsShow(null);
+        return commoditySort;
     }
 }

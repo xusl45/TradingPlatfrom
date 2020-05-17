@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tradingPlatfrom.dao.PostDao">
+    <resultMap id="Sort" type="com.ssm.tradingPlatfrom.entity.PostSort">
+        <id property="id"  column="id"/>
+        <result property="sortName" column="sort_name"/>
+        <result property="iconPath" column="icon_path"/>
+        <result property="parentSort" column="parent_sort"/>
+        <result property="isShow" column="is_show"/>
+    </resultMap>
+    <resultMap id="post" type="com.ssm.tradingPlatfrom.entity.Post">
+        <id property="id"  column="id"/>
+        <result property="fromUid" column="from_uid"/>
+        <result property="sortID" column="sort_id"/>
+        <result property="commodityID" column="commodity_id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="mainImages" column="main_image"/>
+        <result property="time" column="time"/>
+        <result property="replyNum" column="reply_num"/>
+        <result property="nice" column="nice"/>
+        <result property="isDelete" column="is_delete"/>
+        <collection property="userMessage" ofType="com.ssm.tradingPlatfrom.entity.UserMessage">
+            <result property="nickName" column="nick_name"/>
+            <result property="img" column="img"/>
+        </collection>
+    </resultMap>
+    <select id="findPostSort"  resultMap="Sort">
+         SELECT * FROM post_sort WHERE post_sort.is_show = 0
+    </select>
+    <select id="findPostBySortID"  resultMap="post">
+         SELECT
+usermessage.img,
+usermessage.nick_name,
+post.id,
+post.from_uid,
+post.sort_id,
+post.commodity_id,
+post.title,
+post.content,
+post.main_image,
+post.time,
+post.reply_num,
+post.nice,
+post.is_delete
+FROM
+post
+INNER JOIN usermessage ON post.from_uid = usermessage.uid
+WHERE
+post.sort_id = #{id}
+
+    </select>
+    <select id="findPostByID"  resultMap="post">
+         SELECT
+usermessage.img,
+usermessage.nick_name,
+post.id,
+post.from_uid,
+post.sort_id,
+post.commodity_id,
+post.title,
+post.content,
+post.main_image,
+post.time,
+post.reply_num,
+post.nice,
+post.is_delete
+FROM
+post
+INNER JOIN usermessage ON post.from_uid = usermessage.uid
+WHERE
+post.id = #{id}
+    </select>
+    <select id="findALLPost"  resultMap="post">
+         SELECT
+usermessage.img,
+usermessage.nick_name,
+post.id,
+post.from_uid,
+post.sort_id,
+post.commodity_id,
+post.title,
+post.content,
+post.main_image,
+post.time,
+post.reply_num,
+post.nice,
+post.is_delete
+FROM
+post
+INNER JOIN usermessage ON post.from_uid = usermessage.uid
+    </select>
+    <insert id="insetPost" parameterType="com.ssm.tradingPlatfrom.entity.Post" >
+       INSERT INTO post VALUES(null,#{fromUid},#{sortID},#{commodityID},#{title},#{content},#{mainImages},NULL,0,0,'N');
+    </insert>
+    <update id="UpdatePostGood" parameterType="com.ssm.tradingPlatfrom.entity.Post">
+update  post set
+nice= #{nice},
+reply_num =#{replyNum}
+where id=#{id}
+    </update>
+</mapper>

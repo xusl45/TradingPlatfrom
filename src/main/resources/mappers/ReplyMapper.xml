@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.tradingPlatfrom.dao.ReplyDao">
+
+    <resultMap id="replyReturn" type="com.ssm.tradingPlatfrom.entity.showEntity.ReplyReturn">
+        <id property="id"  column="id"/>
+        <result property="userName" column="nick_name"/>
+        <result property="img" column="img"/>
+        <result property="fromName" column="from_name"/>
+        <collection property="reply" ofType="com.ssm.tradingPlatfrom.entity.Reply">
+            <id property="id"  column="testid"/>
+            <result property="content" column="content"/>
+            <result property="formUid" column="from_uid"/>
+            <result property="toUid" column="to_uid"/>
+            <result property="topicID" column="topic_id"/>
+            <result property="time" column="time"/>
+        </collection>
+    </resultMap>
+
+    <select id="findReplyByTopicID" parameterType="int" resultMap="replyReturn">
+       SELECT
+    replies.id,
+    replies.content,
+    replies.from_uid,
+    replies.time,
+    replies.to_uid,
+    replies.topic_id,
+    (SELECT post.from_uid FROM post WHERE replies.topic_id=post.id) AS testid,
+    usermessage.img,
+    usermessage.nick_name,
+     (SELECT usermessage.nick_name FROM usermessage WHERE replies.to_uid=usermessage.uid) AS from_name
+    FROM
+    replies
+    INNER JOIN usermessage ON usermessage.uid = replies.from_uid
+    WHERE
+    replies.topic_id =#{id}
+    </select>
+    <select id="findALLReply" parameterType="int" resultMap="replyReturn">
+       SELECT
+    replies.id,
+    replies.content,
+    replies.from_uid,
+    replies.time,
+    replies.to_uid,
+    replies.topic_id,
+    (SELECT post.from_uid FROM post WHERE replies.topic_id=post.id) AS testid,
+    usermessage.img,
+    usermessage.nick_name,
+     (SELECT usermessage.nick_name FROM usermessage WHERE replies.to_uid=usermessage.uid) AS from_name
+    FROM
+    replies
+    INNER JOIN usermessage ON usermessage.uid = replies.from_uid
+    </select>
+    <insert id="insertReply" parameterType="com.ssm.tradingPlatfrom.entity.Reply" >
+       INSERT INTO replies VALUES(null,#{content},#{formUid},NULL,#{toUid},#{topicID});
+    </insert>
+
+</mapper>

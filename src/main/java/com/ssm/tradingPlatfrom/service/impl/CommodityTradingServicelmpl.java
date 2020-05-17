@@ -44,20 +44,29 @@ public class CommodityTradingServicelmpl implements CommodityTradingService {
     @Override
     public Boolean deleteCommoditySize(int id) {
         CommodityStorage commodityStorage = commodityTradingDao.findCommmoditySize(id);
-        System.out.println(commodityStorage.toString()+"xushulong");
         commodityTradingDao.deleteCommoditySize(id);
-        CommodityStorage  commodityStorages=commodityTradingDao.findMinpriceCommodityStore(commodityStorage.getCommodityID());
-        System.out.println(commodityStorages.toString()+"xushulong123456");
-        if (commodityStorages == null)
-        {
+        CommodityStorage commodityStorages=commodityTradingDao.findMinpriceCommodityStore(commodityStorage.getCommodityID());
+        if (commodityStorages != null) {
+            System.out.println(commodityStorages.toString());
+            commodityDao.updateCommodityPrice(commodityStorages);
+        } else{
             CommodityStorage commodityStorage1 = new CommodityStorage();
-            commodityStorage1.setCommodityID(id);
+            commodityStorage1.setCommodityID(commodityStorage.getCommodityID());
             commodityStorage.setPrice(0);
             commodityDao.updateCommodityPrice(commodityStorage1);
         }
-        else{
-            commodityDao.updateCommodityPrice(commodityStorages);
-        }
         return true;
+    }
+
+    @Override
+    public List<CommodityStorage> showALLCommoditySizeById(int commodityId) {
+        List<CommodityStorage> commodityStorages = commodityTradingDao.showALLCommoditySizeById(commodityId);
+        return commodityStorages;
+    }
+
+    @Override
+    public List<CommodityStorage> findALLCommoditySize() {
+        List<CommodityStorage> commodityStorages = commodityTradingDao.findALLCommoditySize();
+        return commodityStorages;
     }
 }

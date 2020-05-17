@@ -7,13 +7,13 @@ import java.util.Date;
 
 public class UserMessage {
     private int id;
+    private int uid;
     private String email;//邮箱
     private String nickName;
     private String sex;//性别
     private String introduce;//简介
-    private String sellNum;//出售数量
-    private String buyNum;//购买数量
     private String img;//头像
+    private int remainSum;//余额
     private String age;//居住地
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
@@ -23,8 +23,13 @@ public class UserMessage {
     {
     }
 
-    public UserMessage(int id, String email, String nickName, String sex, String introduce, String img, String age) {
-        this.id = id;
+    public UserMessage(int uid, int remainSum) {
+        this.uid = uid;
+        this.remainSum = remainSum;
+    }
+
+    public UserMessage(int uid, String email, String nickName, String sex, String introduce, String img, String age) {
+        this.uid = uid;
         this.email = email;
         this.nickName = nickName;
         this.sex = sex;
@@ -33,15 +38,14 @@ public class UserMessage {
         this.age = age;
     }
 
-    public UserMessage(int id, String email, String nickName, String sex, String introduce, String sellNum, String buyNum, String img, String age) {
-        this.id = id;
+    public UserMessage(int uid, String email, String nickName, String sex, String introduce, int remainSum, String img, String age) {
+        this.uid = uid;
         this.email = email;
         this.nickName = nickName;
         this.sex = sex;
         this.introduce = introduce;
-        this.sellNum = sellNum;
-        this.buyNum = buyNum;
         this.img = img;
+        this.remainSum = remainSum;
         this.age = age;
     }
 
@@ -53,12 +57,27 @@ public class UserMessage {
                 ", nickName='" + nickName + '\'' +
                 ", sex='" + sex + '\'' +
                 ", introduce='" + introduce + '\'' +
-                ", sellNum='" + sellNum + '\'' +
-                ", buyNum='" + buyNum + '\'' +
                 ", img='" + img + '\'' +
                 ", age='" + age + '\'' +
                 ", bornTime=" + bornTime +
                 '}';
+    }
+
+
+    public int getRemainSum() {
+        return remainSum;
+    }
+
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
+
+    public void setRemainSum(int remainSum) {
+        this.remainSum = remainSum;
     }
 
     public String getAge() {
@@ -108,21 +127,6 @@ public class UserMessage {
         this.introduce = introduce;
     }
 
-    public String getSellNum() {
-        return sellNum;
-    }
-
-    public void setSellNum(String sellNum) {
-        this.sellNum = sellNum;
-    }
-
-    public String getBuyNum() {
-        return buyNum;
-    }
-
-    public void setBuyNum(String buyNum) {
-        this.buyNum = buyNum;
-    }
 
     public String getImg() {
         return img;

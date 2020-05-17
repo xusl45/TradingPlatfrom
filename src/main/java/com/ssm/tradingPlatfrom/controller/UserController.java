@@ -20,13 +20,13 @@ public class UserController {
     @ResponseBody
     private ServerResponse getAllUser() {
         List<User> user =  userService.getAllUser();
-//        Map<String, Object> map = ReturnMap.ReturnMapS(user);
+//        Map<String, Object> map = ReturnMap.ReturnMapS(user);git remote -v
         return ServerResponse.createBySuccess("查询成功",user);
     }
 
     @RequestMapping("/login")
     @ResponseBody
-    private ServerResponse login(String userName,String password) {
+    private ServerResponse login(String userName, String password) {
         System.out.println(userName+ password+"许舒隆");
         User user= userService.login(userName ,password);
         if (user != null) {
@@ -36,9 +36,20 @@ public class UserController {
         }
     }
 
+    @RequestMapping("/adminLogin")
+    @ResponseBody
+    private ServerResponse adminLogin(String userName, String password) {
+        System.out.println(userName+ password+"许舒隆");
+        User user= userService.adminLogin(userName ,password);
+        if (user != null) {
+            return  ServerResponse.createBySuccess("登录成功",user);
+        }else {
+            return  ServerResponse.createByError("登录失败");
+        }
+    }
     @RequestMapping("/apply")
     @ResponseBody
-    private ServerResponse apply(String userName,String password) {
+    private ServerResponse apply(String userName, String password) {
         Boolean apply = userService.applyUser(userName,password);
         if (apply) {
             return  ServerResponse.createBySuccess("注册成功",apply);

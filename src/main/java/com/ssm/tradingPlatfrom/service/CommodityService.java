@@ -16,4 +16,8 @@ public interface CommodityService {
     List<Commodity> findCommodityOfSort(int id);
 
     List<CommodityBanner> findCommodityBanner();
+
+    Commodity findOneCommodityById(int id);
+
+    CommoditySort findCommoditySortById(int id);
 }

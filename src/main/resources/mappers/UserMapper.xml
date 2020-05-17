@@ -9,16 +9,26 @@
         <result property="state" column="state"/>
         <collection property="userMessages" ofType="com.ssm.tradingPlatfrom.entity.UserMessage">
             <id property="id"  column="testid"/>
+            <result property="uid" column="uid"/>
             <result property="sex" column="sex"/>
             <result property="age" column="age"/>
             <result property="nickName" column="nick_name"/>
             <result property="introduce" column="introduce"/>
             <result property="email" column="email"/>
-            <result property="buyNum" column="buy_num"/>
-            <result property="sellNum" column="sell_num"/>
+            <result property="remainSum" column="remaining_sum"/>
             <result property="img" column="img"/>
             <result property="bornTime" column="born_time"/>
         </collection>
+    </resultMap>
+
+    <resultMap id="UserAddress" type="com.ssm.tradingPlatfrom.entity.UserAddress">
+        <id property="id"  column="id"/>
+        <result property="uid" column="uid"/>
+        <result property="name" column="name"/>
+        <result property="phone" column="phone" />
+        <result property="zipCode" column="zip_code"/>
+        <result property="address" column="address"/>
+        <result property="isDelete" column="is_delete" />
     </resultMap>
 
     <select id="getAllUser"  resultType="com.ssm.tradingPlatfrom.entity.User">
@@ -28,28 +38,27 @@
         SELECT * FROM user
           where  username = #{username} and state = 1
     </select>
-    <select id="loginAdmin" parameterType="String" resultType="com.ssm.tradingPlatfrom.entity.User">
+    <select id="adminLogin" parameterType="String" resultType="com.ssm.tradingPlatfrom.entity.User">
         SELECT * FROM user
-          where usernam = #{username} and state = 2
+          where username = #{username} and state = 2
     </select>
 
     <insert id="insertUser" parameterType="String" keyProperty="userId" useGeneratedKeys="true">
        insert into user values(null,#{username},#{password},1);
     </insert>
-
-    <select id="findUserMessage" parameterType="String" resultMap="UserMessage">
+    <select id="findAdminMessage" parameterType="String" resultMap="UserMessage">
         SELECT
         `user`.id,
         `user`.username,
         `user`.state,
+        usermessage.id,
         usermessage.id,
         usermessage.email,
         usermessage.born_time,
         usermessage.age,
         usermessage.sex,
         usermessage.img,
-        usermessage.buy_num,
-        usermessage.sell_num,
+        usermessage.remaining_sum,
         usermessage.introduce,
         usermessage.nick_name
         FROM
@@ -57,6 +66,50 @@
         INNER JOIN usermessage ON `user`.id = usermessage.uid
         WHERE
         `user`.username = #{username} and
+        `user`.state = 2
+    </select>
+    <select id="findUserMessage" parameterType="String" resultMap="UserMessage">
+        SELECT
+        `user`.id,
+        `user`.username,
+        `user`.state,
+        usermessage.id,
+        usermessage.id,
+        usermessage.email,
+        usermessage.born_time,
+        usermessage.age,
+        usermessage.sex,
+        usermessage.img,
+        usermessage.remaining_sum,
+        usermessage.introduce,
+        usermessage.nick_name
+        FROM
+        `user`
+        INNER JOIN usermessage ON `user`.id = usermessage.uid
+        WHERE
+        `user`.username = #{username} and
+        `user`.state = 1
+    </select>
+    <select id="findUserMessageByID"  resultMap="UserMessage">
+        SELECT
+        `user`.id,
+        `user`.username,
+        `user`.state,
+        usermessage.id,
+        usermessage.id,
+        usermessage.email,
+        usermessage.born_time,
+        usermessage.age,
+        usermessage.sex,
+        usermessage.img,
+        usermessage.remaining_sum,
+        usermessage.introduce,
+        usermessage.nick_name
+        FROM
+        `user`
+        INNER JOIN usermessage ON `user`.id = usermessage.uid
+        WHERE
+        `user`.id = #{id} and
         `user`.state = 1
 
     </select>
@@ -66,26 +119,59 @@
         `user`.username,
         `user`.state,
         usermessage.id,
+        usermessage.id,
         usermessage.email,
         usermessage.born_time,
         usermessage.age,
         usermessage.sex,
         usermessage.img,
-        usermessage.buy_num,
-        usermessage.sell_num,
+        usermessage.remaining_sum,
         usermessage.introduce,
         usermessage.nick_name
         FROM
         `user`
         INNER JOIN usermessage ON `user`.id = usermessage.uid
         WHERE
-        `user`.state = 1
+        `user`.state = 1 OR `user`.state = 0
 
     </select>
 
     <insert id="insertUserMessage" parameterType="com.ssm.tradingPlatfrom.entity.UserMessage" >
-       insert into usermessage values(null,#{id},#{email},null,#{sex},#{img},#{buyNum},#{sellNum},#{introduce},#{nickName},null);
+       insert into usermessage values(null,#{uid},#{email},null,#{sex},#{img},#{introduce},#{remainSum},#{nickName},null);
     </insert>
-
-
+    <update id="setUserMessage" parameterType="com.ssm.tradingPlatfrom.entity.UserMessage">
+        update  usermessage set
+        sex=#{sex},
+        age=#{age},
+        introduce=#{introduce},
+        nick_name=#{nickName},
+        img=#{img},
+        email=#{email}
+        where uid=#{uid}
+    </update>
+    <update id="updateRemainingSum" parameterType="com.ssm.tradingPlatfrom.entity.UserMessage">
+        update  usermessage set
+        remaining_sum=#{remainSum}
+        where uid=#{uid}
+    </update>
+    <select id="findALLUserAddress"  resultMap="UserAddress">
+       SELECT * FROM user_address WHERE user_address.uid = #{uid}  AND user_address.is_delete = 'N'
+    </select>
+    <select id="findUserAddressByID"  resultMap="UserAddress">
+       SELECT * FROM user_address WHERE user_address.id = #{id}
+    </select>
+    <insert id="insertUserAddress" parameterType="com.ssm.tradingPlatfrom.entity.UserAddress" >
+       insert into user_address values(NULL,#{uid},#{name},#{phone},#{zipCode},#{address},'N')
+    </insert>
+    <update id="deleteUserAddress"  parameterType="int">
+         update user_address set is_delete='Y' where id=#{id}
+    </update>
+    <update id="updateUserAddress" parameterType="com.ssm.tradingPlatfrom.entity.UserAddress">
+        update  user_address set
+        user_address.name = #{name},
+        phone =#{phone},
+        zip_code =#{zipCode},
+        address =#{address}
+        where id=#{id}
+    </update>
 </mapper>

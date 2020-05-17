@@ -58,9 +58,6 @@
             </list>
         </property>
     </bean>
-
-
-
     <!-- 解决使用@ResponseBody 的中文乱码。 -->
     <bean class="com.ssm.tradingPlatfrom.utils.UTF8StringBeanPostProcessor"/>
     <!-- 支持文件上传 -->

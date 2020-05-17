@@ -3,7 +3,6 @@ package com.ssm.tradingPlatfrom.controller;
 import com.ssm.tradingPlatfrom.entity.Commodity;
 import com.ssm.tradingPlatfrom.entity.CommodityBanner;
 import com.ssm.tradingPlatfrom.entity.CommoditySort;
-import com.ssm.tradingPlatfrom.entity.User;
 import com.ssm.tradingPlatfrom.service.CommodityService;
 import com.ssm.tradingPlatfrom.utils.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ public class CommodityController {
     @Autowired
     private CommodityService commodityService;
 
-    @RequestMapping("/findCommodityBanner")//得到分类列表
+    @RequestMapping("/findCommodityBanner")//得到导航栏
     @ResponseBody
     private ServerResponse findCommodityBanner() {
         List<CommodityBanner> commodityBanners = commodityService.findCommodityBanner();
@@ -30,7 +29,6 @@ public class CommodityController {
         }else {
             return  ServerResponse.createByError("Banner广告位获取成功");
         }
-
     }
 
     @RequestMapping("/findCommoditySort")//得到分类列表
@@ -69,10 +67,23 @@ public class CommodityController {
 
     }
 
+    @RequestMapping("/findOneCommodityById")//根据id查询商品
+    @ResponseBody
+    private ServerResponse findOneCommodityById(String id) {
+        Commodity commoditySort = commodityService.findOneCommodityById(Integer.parseInt(id));
+        if (commoditySort!= null) {
+            return  ServerResponse.createBySuccess("商品全部类别",commoditySort);
+        }else {
+            return  ServerResponse.createByError("获取商品全部类别失败");
+        }
+
+    }
+
     @RequestMapping("/findCommodityOfSort")//查找某一类商品
     @ResponseBody
     private ServerResponse findCommodityOfSort(String id) {
         List<Commodity> commoditySorts = commodityService.findCommodityOfSort(Integer.parseInt(id));
+        System.out.println(commoditySorts);
         if (commoditySorts!= null) {
             return  ServerResponse.createBySuccess("商品全部类别",commoditySorts);
         }else {
@@ -81,5 +92,17 @@ public class CommodityController {
 
     }
 
+
+    @RequestMapping("/findCommoditySortById")//根据商品id查询商品对应类别
+    @ResponseBody
+    private ServerResponse findCommoditySortById(String id) {
+        CommoditySort commoditySort = commodityService.findCommoditySortById(Integer.parseInt(id));
+        if (commoditySort!= null) {
+            return  ServerResponse.createBySuccess("商品id对应类别",commoditySort);
+        }else {
+            return  ServerResponse.createByError("获取商品id对应类别失败");
+        }
+
+    }
 
 }

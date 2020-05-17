@@ -11,6 +11,7 @@ public class Commodity {
     private String type;
     private int sendPrice;
     private int sellNum;
+    private int isDelete;
 
     public int getId() {
         return id;

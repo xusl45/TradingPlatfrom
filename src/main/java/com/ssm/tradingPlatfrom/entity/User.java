@@ -1,8 +1,6 @@
 package com.ssm.tradingPlatfrom.entity;
 
 
-import com.ssm.tradingPlatfrom.entity.UserMessage;
-
 public class User {
 
     private Integer id;
@@ -10,7 +8,7 @@ public class User {
 
     private String username;
     private String password;
-    private boolean state;
+    private int state;
     private UserMessage userMessages;
 
     public Integer getId() {
@@ -37,11 +35,11 @@ public class User {
         this.password = password;
     }
 
-    public boolean isState() {
+    public int getState() {
         return state;
     }
 
-    public void setState(boolean state) {
+    public void setState(int state) {
         this.state = state;
     }
 

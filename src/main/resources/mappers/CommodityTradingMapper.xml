@@ -37,6 +37,22 @@ INNER JOIN commodity_storage ON commodity_storage.commodity_id = commodity.id
 WHERE
 commodity_storage.uid = #{uid}
     </select>
+    <select id="findALLCommoditySize"  resultMap="CommodityStorage">
+    SELECT
+commodity.sort_id,
+commodity.main_image,
+commodity.`name`,
+commodity_storage.id,
+commodity_storage.uid,
+commodity_storage.size,
+commodity_storage.price,
+commodity_storage.sell_time,
+commodity_storage.commodity_id,
+commodity_storage.order_number
+FROM
+commodity
+INNER JOIN commodity_storage ON commodity_storage.commodity_id = commodity.id
+    </select>
     <delete id="deleteCommoditySize" parameterType="int">
         delete from commodity_storage
         where id=#{id}
@@ -59,5 +75,23 @@ WHERE
 commodity_storage.commodity_id = #{commodityID}
 ORDER BY
 commodity_storage.price ASC
+    </select>
+    <select id="showALLCommoditySizeById"  resultMap="CommodityStorage">
+SELECT
+commodity_storage.id,
+commodity_storage.uid,
+commodity_storage.size,
+commodity_storage.price,
+commodity_storage.sell_time,
+commodity_storage.commodity_id,
+commodity_storage.order_number
+FROM
+( select * from commodity_storage order by price  ASC)commodity_storage
+WHERE
+commodity_storage.commodity_id = #{commodityId}
+GROUP BY
+commodity_storage.size ASC
+
+
     </select>
 </mapper>
