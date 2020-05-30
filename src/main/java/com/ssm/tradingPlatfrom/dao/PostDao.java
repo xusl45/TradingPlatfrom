@@ -22,4 +22,12 @@ public interface PostDao {
 
     //查找所有帖子
     List<Post> findALLPost();
+
+    //展示帖子 停用
+    void openPost(int id);
+    //体制展示帖子 变为展示
+    void stopPost(int id);
+
+    //查看某个人的发帖情况
+    List<Post> findPostByUid(int id);
 }

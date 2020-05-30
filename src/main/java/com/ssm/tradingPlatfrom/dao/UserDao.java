@@ -47,4 +47,10 @@ public interface UserDao {
     //查找id下的用户收货地址
     UserAddress findUserAddressByID(int id);
 
+    //修改密码
+    void changePassword(User user);
+    //停用账号
+    void stopAccount(int id);
+    //启用账号
+    void openAccount(int id);
 }

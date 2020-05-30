@@ -27,4 +27,10 @@ public interface CommodityDao {
     CommoditySort findCommoditySortById(int id); //根据商品的id查询对应的类别
 
     void updateSellNum(Commodity commodity); //增加售出商品
+
+    List<Commodity> findHotCommodity(); // 热搜商品
+
+    void stopCommodity(int id);// 将展示商品停用
+
+    void openCommodity(int id);//将停用商品展示
 }

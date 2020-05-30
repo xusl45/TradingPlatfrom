@@ -6,6 +6,7 @@ import com.ssm.tradingPlatfrom.entity.UserMessage;
 import com.ssm.tradingPlatfrom.service.UserMessageService;
 import com.ssm.tradingPlatfrom.service.UserService;
 import com.ssm.tradingPlatfrom.utils.Md5;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -80,5 +81,27 @@ public class UserServiceImp implements UserService {
                 return null;
             }
         }
+    }
+
+    @Override
+    public Boolean changePassword(String id, String password) {
+        String psw = Md5.KL(password);
+        User changeUSER = new User();
+        changeUSER.setId(Integer.parseInt(id));
+        changeUSER.setPassword(psw);
+        userDao.changePassword(changeUSER);
+        return true;
+    }
+
+    @Override
+    public Boolean stopAccount(int id) {
+        userDao.stopAccount(id);
+        return true;
+    }
+
+    @Override
+    public Boolean openAccount(int id) {
+        userDao.openAccount(id);
+        return true;
     }
 }

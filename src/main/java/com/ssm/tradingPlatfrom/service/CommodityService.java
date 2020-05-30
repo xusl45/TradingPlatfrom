@@ -20,4 +20,10 @@ public interface CommodityService {
     Commodity findOneCommodityById(int id);
 
     CommoditySort findCommoditySortById(int id);
+
+    List<Commodity> findHotCommodity();
+
+    Boolean stopCommodity(int id);
+
+    Boolean openCommodity(int id);
 }

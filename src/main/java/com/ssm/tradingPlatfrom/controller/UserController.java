@@ -58,5 +58,37 @@ public class UserController {
         }
     }
 
+    @RequestMapping("/changePassword")
+    @ResponseBody
+    private ServerResponse changePassword(String id, String password) {
+        Boolean change = userService.changePassword(id,password);
+        if (change) {
+            return  ServerResponse.createBySuccess("修改密码成功",change);
+        }else {
+            return  ServerResponse.createByError("修改密码失败");
+        }
+    }
+
+    @RequestMapping("/stopAccount")
+    @ResponseBody
+    private ServerResponse stopAccount(String id) {
+        Boolean change = userService.stopAccount(Integer.parseInt(id));
+        if (change) {
+            return  ServerResponse.createBySuccess("停用账号成功",change);
+        }else {
+            return  ServerResponse.createByError("停用账号失败失败");
+        }
+    }
+
+    @RequestMapping("/openAccount")
+    @ResponseBody
+    private ServerResponse openAccount(String id) {
+        Boolean change = userService.openAccount(Integer.parseInt(id));
+        if (change) {
+            return  ServerResponse.createBySuccess("启用账号成功",change);
+        }else {
+            return  ServerResponse.createByError("启用账号失败失败");
+        }
+    }
 
 }

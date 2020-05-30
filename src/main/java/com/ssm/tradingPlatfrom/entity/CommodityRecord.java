@@ -10,7 +10,7 @@ public class CommodityRecord {
     private int bid;
     private int price;
     private int tradingPrice;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date buyTime;//购买时间
     private int commodityID;
     private int addressID;

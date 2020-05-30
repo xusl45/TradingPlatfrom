@@ -9,7 +9,7 @@ public class CommodityStorage {
     private int uid;//发售者id
     private int price;//出售价格
     private float size;//鞋码
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date sellTime;//出售时间
     private int commodityID;//商品id
     private String orderNumber;

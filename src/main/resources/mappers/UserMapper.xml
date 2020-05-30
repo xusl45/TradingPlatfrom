@@ -42,7 +42,21 @@
         SELECT * FROM user
           where username = #{username} and state = 2
     </select>
-
+    <update id="changePassword" parameterType="com.ssm.tradingPlatfrom.entity.User">
+        update  user set
+        password=#{password}
+        where id=#{id}
+    </update>
+    <update id="stopAccount" parameterType="int">
+        update  user set
+        state= '0'
+        where id=#{id}
+    </update>
+    <update id="openAccount" parameterType="int">
+        update  user set
+        state= '1'
+        where id=#{id}
+    </update>
     <insert id="insertUser" parameterType="String" keyProperty="userId" useGeneratedKeys="true">
        insert into user values(null,#{username},#{password},1);
     </insert>

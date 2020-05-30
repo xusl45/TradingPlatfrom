@@ -26,6 +26,7 @@
         <result property="type" column="type"/>
         <result property="sendPrice" column="send_price"/>
         <result property="sellNum" column="sell_num"/>
+        <result property="isDelete" column="is_delete"/>
     </resultMap>
     <select id="findCommoditySort"  resultMap="Sort">
         SELECT * FROM commodity_sort  WHERE commodity_sort.is_show = 0
@@ -42,6 +43,16 @@
     <select id="findOneCommodity"  resultMap="Commodity">
         SELECT * from commodity WHERE commodity.`name` LIKE CONCAT(CONCAT('%',#{name},'%')) AND commodity.is_delete = 'N'
     </select>
+    <select id="findHotCommodity"  resultMap="Commodity">
+        SELECT
+*
+FROM
+commodity
+WHERE is_delete ='N'
+ORDER BY
+commodity.sell_num DESC
+LIMIT 6
+    </select>
     <select id="findCommodityOfSort"  resultMap="Commodity">
         SELECT * FROM commodity WHERE commodity.sort_id = #{id} AND commodity.is_delete = 'N'
     </select>
@@ -54,6 +65,13 @@
     <select id="findCommoditySortById"  resultMap="Sort">
         SELECT * FROM commodity_sort INNER JOIN commodity ON commodity.sort_id = commodity_sort.id WHERE commodity.id = #{id}
     </select>
+
+    <update id="stopCommodity"  parameterType="int">
+        update commodity set is_delete='Y' where id=#{id}
+    </update>
+    <update id="openCommodity"  parameterType="int">
+        update commodity set is_delete='N' where id=#{id}
+    </update>
 
 
 </mapper>

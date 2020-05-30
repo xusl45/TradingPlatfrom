@@ -67,6 +67,18 @@ public class CommodityController {
 
     }
 
+    @RequestMapping("/findHotCommodity")//得到模糊查询商品
+    @ResponseBody
+    private ServerResponse findHotCommodity() {
+        List<Commodity> commoditySorts = commodityService.findHotCommodity();
+        if (commoditySorts!= null) {
+            return  ServerResponse.createBySuccess("获取热搜商品",commoditySorts);
+        }else {
+            return  ServerResponse.createByError("获取热搜商品失败");
+        }
+
+    }
+
     @RequestMapping("/findOneCommodityById")//根据id查询商品
     @ResponseBody
     private ServerResponse findOneCommodityById(String id) {
@@ -103,6 +115,29 @@ public class CommodityController {
             return  ServerResponse.createByError("获取商品id对应类别失败");
         }
 
+    }
+
+
+    @RequestMapping("/stopCommodity")
+    @ResponseBody
+    private ServerResponse stopCommodity(String id) {
+        Boolean change = commodityService.stopCommodity(Integer.parseInt(id));
+        if (change) {
+            return  ServerResponse.createBySuccess("停止展示商品成功",change);
+        }else {
+            return  ServerResponse.createByError("停止展示商品失败");
+        }
+    }
+
+    @RequestMapping("/openCommodity")
+    @ResponseBody
+    private ServerResponse openCommodity(String id) {
+        Boolean change = commodityService.openCommodity(Integer.parseInt(id));
+        if (change) {
+            return  ServerResponse.createBySuccess("启用展示商品成功",change);
+        }else {
+            return  ServerResponse.createByError("启用展示商品失败");
+        }
     }
 
 }

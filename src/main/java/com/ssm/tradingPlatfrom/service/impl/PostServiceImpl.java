@@ -53,4 +53,22 @@ public class PostServiceImpl implements PostService {
         List<Post> posts =postDao.findALLPost();
         return posts;
     }
+
+    @Override
+    public Boolean stopPost(int id) {
+        postDao.stopPost(id);
+        return true;
+    }
+
+    @Override
+    public Boolean openPost(int id) {
+        postDao.openPost(id);
+        return true;
+    }
+
+    @Override
+    public List<Post> findPostByUid(int id) {
+        List<Post> posts =postDao.findPostByUid(id);
+        return posts;
+    }
 }

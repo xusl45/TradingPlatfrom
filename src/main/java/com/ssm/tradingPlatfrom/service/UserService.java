@@ -13,4 +13,10 @@ public interface UserService {
     Boolean applyUser(String userName, String password);
 
     User adminLogin(String userName, String password);
+
+    Boolean changePassword(String id, String password);
+
+    Boolean stopAccount(int id);
+
+    Boolean openAccount(int id);
 }

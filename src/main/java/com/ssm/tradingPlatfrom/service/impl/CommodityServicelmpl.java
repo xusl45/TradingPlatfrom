@@ -71,4 +71,23 @@ public class CommodityServicelmpl implements CommodityService {
         commoditySort.setIsShow(null);
         return commoditySort;
     }
+
+    @Override
+    public List<Commodity> findHotCommodity() {
+        List<Commodity> commoditys = commodityDao.findHotCommodity();
+
+        return commoditys;
+    }
+
+    @Override
+    public Boolean stopCommodity(int id) {
+        commodityDao.stopCommodity(id);
+        return true;
+    }
+
+    @Override
+    public Boolean openCommodity(int id) {
+        commodityDao.openCommodity(id);
+        return true;
+    }
 }

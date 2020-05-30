@@ -16,7 +16,7 @@ public class UserMessage {
     private int remainSum;//余额
     private String age;//居住地
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date bornTime;//注册时间
 
     public UserMessage()

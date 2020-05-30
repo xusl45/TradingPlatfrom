@@ -17,4 +17,10 @@ public interface PostService {
     Post findPostByID(int parseInt);
 
     List<Post> findALLPost();
+
+    Boolean stopPost(int id);
+
+    Boolean openPost(int id);
+
+    List<Post> findPostByUid(int id);
 }

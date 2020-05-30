@@ -48,7 +48,33 @@ FROM
 post
 INNER JOIN usermessage ON post.from_uid = usermessage.uid
 WHERE
-post.sort_id = #{id}
+post.sort_id = #{id} and is_delete = 'N'
+ORDER BY
+post.time DESC
+
+    </select>
+    <select id="findPostByUid"  resultMap="post">
+         SELECT
+usermessage.img,
+usermessage.nick_name,
+post.id,
+post.from_uid,
+post.sort_id,
+post.commodity_id,
+post.title,
+post.content,
+post.main_image,
+post.time,
+post.reply_num,
+post.nice,
+post.is_delete
+FROM
+post
+INNER JOIN usermessage ON post.from_uid = usermessage.uid
+WHERE
+post.from_uid = #{id} and is_delete = 'N'
+ORDER BY
+post.time DESC
 
     </select>
     <select id="findPostByID"  resultMap="post">
@@ -90,6 +116,8 @@ post.is_delete
 FROM
 post
 INNER JOIN usermessage ON post.from_uid = usermessage.uid
+ORDER BY
+post.time DESC
     </select>
     <insert id="insetPost" parameterType="com.ssm.tradingPlatfrom.entity.Post" >
        INSERT INTO post VALUES(null,#{fromUid},#{sortID},#{commodityID},#{title},#{content},#{mainImages},NULL,0,0,'N');
@@ -98,6 +126,16 @@ INNER JOIN usermessage ON post.from_uid = usermessage.uid
 update  post set
 nice= #{nice},
 reply_num =#{replyNum}
+where id=#{id}
+    </update>
+    <update id="stopPost" parameterType="int">
+update  post set
+is_delete ='Y'
+where id=#{id}
+    </update>
+    <update id="openPost" parameterType="int">
+update  post set
+is_delete ='N'
 where id=#{id}
     </update>
 </mapper>
